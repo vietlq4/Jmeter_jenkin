@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.3 r1808647">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="PATH" elementType="Argument">
+            <stringProp name="Argument.name">PATH</stringProp>
+            <stringProp name="Argument.value">${__P(PATH, ${__BeanShell(import org.apache.jmeter.services.FileServer; FileServer.getFileServer().getBaseDir();)})}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setUp Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">1</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1506836322000</longProp>
+        <longProp name="ThreadGroup.end_time">1506836322000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </SetupThreadGroup>
+      <hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="JSR223 Sampler - Delete file if needed" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">2b9ec9a2-41ad-4b4f-83be-211250d9c31a</stringProp>
+            <stringProp name="script">def thread_id = sampler.getThreadName().replaceAll(&quot;.+[^\\d-]&quot;,&quot;&quot;)
+
+if (thread_id == &quot;1-1&quot;) {
+	new File(vars.get(&quot;PATH&quot;),&apos;users.csv&apos;).delete()	
+}</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+        </hashTree>
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Request A - Return list of users" enabled="true">
+          <boolProp name="WAITING">true</boolProp>
+          <boolProp name="SUCCESFULL">true</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_DATA">{&quot;data&quot;:[{&quot;username&quot;:&quot;test1&quot;,&quot;user_id&quot;:15588,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;1&quot;},{&quot;username&quot;:&quot;test2&quot;,&quot;user_id&quot;:16304,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;2&quot;},{&quot;username&quot;:&quot;test3&quot;,&quot;user_id&quot;:20697,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;3&quot;},{&quot;username&quot;:&quot;test4&quot;,&quot;user_id&quot;:26459,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;1&quot;},{&quot;username&quot;:&quot;test5&quot;,&quot;user_id&quot;:27907,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;4&quot;},{&quot;username&quot;:&quot;test6&quot;,&quot;user_id&quot;:32660,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;5&quot;},{&quot;username&quot;:&quot;test7&quot;,&quot;user_id&quot;:52808,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;6&quot;},{&quot;username&quot;:&quot;test8&quot;,&quot;user_id&quot;:66804,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;7&quot;},{&quot;username&quot;:&quot;test9&quot;,&quot;user_id&quot;:74256,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;8&quot;},{&quot;username&quot;:&quot;test10&quot;,&quot;user_id&quot;:84150,&quot;first_name&quot;:&quot;Test&quot;,&quot;last_name&quot;:&quot;9&quot;}]}</stringProp>
+          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+        </kg.apc.jmeter.samplers.DummySampler>
+        <hashTree>
+          <JSR223PostProcessor guiclass="TestBeanGUI" testclass="JSR223PostProcessor" testname="JSR223 PostProcessor - Extract the user value" enabled="true">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">157c3e68-6472-43f8-a149-1c53964ababc</stringProp>
+            <stringProp name="script">def path = vars.get(&quot;PATH&quot;)
+
+def slurper 	= new groovy.json.JsonSlurper();
+def obj 		= slurper.parseText(prev.getResponseDataAsString());
+def file 		= new File(path,&apos;users.csv&apos;)
+
+for (data in obj.data) {
+	file &lt;&lt; data.username + &quot;,&quot; + data.user_id + &quot;\n&quot;
+}</stringProp>
+          </JSR223PostProcessor>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+    <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="WorkBench" enabled="true">
+      <boolProp name="WorkBench.save">true</boolProp>
+    </WorkBench>
+    <hashTree/>
+  </hashTree>
+</jmeterTestPlan>
